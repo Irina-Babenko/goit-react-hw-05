@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Suspense, lazy } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navigation from '../Navigation/Navigation';
 
-function App() {
-  const [count, setCount] = useState(0)
+const HomePage = lazi(() => import('../../pages/HomePage/HomePage'));
+const MovieDetaliPage = lazi(() =>
+  import('../../pages/MovieDetailsPage/MovieDetailsPage'),
+);
+const MoviesPage = lazy(() => import('../../pages/MoviesPage/MoviesPage'));
+const NotFoundPage = lazi(() =>
+  import('../../pages/NotFoundPage/NotFoundPage'),
+);
+const MovieCast = lazy(() => import('../MovieCast/MovieCast'));
+const MovieReviwes = lazy(() => import('../MovieReviews/MovieReviews'));
 
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <Navigation />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/movies" element={<MoviesPage />}></Route>
+          <Route path="/movies/movieid" element={<MovieDetaliPage />}></Route>
+          <Route path="/cast" element={<MovieCast />}></Route>
+          <Route path="/reviews" element={<MovieReviwes />}></Route>
+          <Route path="*" element={<NotFoundPage />}></Route>
+        </Routes>
+      </Suspense>
+    </div>
+  );
+};
 
-export default App
+export default App;
