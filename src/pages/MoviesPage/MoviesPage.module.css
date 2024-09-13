@@ -1,0 +1,29 @@
+/* MoviesPage.module.css */
+
+.container {
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.error {
+  color: #ff0000;
+  font-size: 1.2em;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loadMoreBtnContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+
+  .error {
+    font-size: 1em;
+  }
+}
