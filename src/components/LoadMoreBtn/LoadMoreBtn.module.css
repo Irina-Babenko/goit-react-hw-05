@@ -3,9 +3,14 @@
   margin: 20px auto;
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #007bff;
+  background-color: #4a82be;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.button:hover {
+  background-color: #3c6796;
+  transition: color 0.3s ease;
 }

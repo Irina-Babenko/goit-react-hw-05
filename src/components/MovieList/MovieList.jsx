@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import css from './MovieList.module.css'; // Исправьте имя файла
+import css from './MovieList.module.css';
 
 const MovieList = ({ movies }) => (
   <ul className={css.movieList}>
@@ -12,7 +12,7 @@ const MovieList = ({ movies }) => (
             alt={movie.title}
             className={css.poster}
           />
-          <h2>{movie.title}</h2>
+          <h2 className={css.title}>{movie.title}</h2>
         </Link>
       </li>
     ))}

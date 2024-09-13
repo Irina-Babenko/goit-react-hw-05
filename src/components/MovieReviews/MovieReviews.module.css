@@ -4,6 +4,7 @@
 
 .title {
   font-size: 24px;
+  text-transform: uppercase;
   margin-bottom: 15px;
 }
 
@@ -15,9 +16,9 @@
 .reviewItem {
   margin-bottom: 15px;
   padding: 15px;
-  border: 1px solid #ddd;
+  background-color: #0c0c0c;
+  border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
-  background-color: #f9f9f9;
 }
 
 .author {
@@ -28,5 +29,6 @@
 
 .content {
   font-size: 16px;
-  color: #333;
+  color: #c2c3c9;
+  text-align: justify;
 }

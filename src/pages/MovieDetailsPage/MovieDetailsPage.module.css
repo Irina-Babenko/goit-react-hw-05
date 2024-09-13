@@ -1,4 +1,6 @@
 .container {
+  max-width: 1120px;
+  margin: auto;
   padding: 20px;
 }
 
@@ -6,17 +8,19 @@
   display: inline-block;
   margin-bottom: 20px;
   text-decoration: none;
-  color: #007bff;
+  text-transform: lowercase;
+  color: #6aa5e5;
 }
 
 .movieDetails {
   display: flex;
+  padding-bottom: 40px;
 }
 
 .poster {
   width: 200px;
   height: auto;
-  margin-right: 20px;
+  margin-right: 32px;
 }
 
 .info {
@@ -25,8 +29,10 @@
 
 h1 {
   margin: 0;
+  text-transform: uppercase;
 }
 
 p {
-  margin: 5px 0;
+  margin: 10px 0;
+  text-align: justify;
 }

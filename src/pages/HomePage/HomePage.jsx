@@ -1,8 +1,7 @@
-// src/pages/HomePage/HomePage.jsx
 import React, { useState, useEffect } from 'react';
-import { fetchTrendingMovies } from '../../fetchTMDB'; // Импорт функции для получения трендовых фильмов
-import MovieList from '../../components/MovieList/MovieList'; // Импорт компонента для отображения списка фильмов
-import css from './HomePage.module.css'; // Импорт стилей, если есть
+import { fetchTrendingMovies } from '../../fetchTMDB';
+import MovieList from '../../components/MovieList/MovieList';
+import css from './HomePage.module.css';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);

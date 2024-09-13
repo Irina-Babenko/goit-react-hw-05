@@ -1,54 +1,55 @@
-/* Navigation.module.css */
-
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background-color: #333;
-  color: #fff;
+  color: #dbdbdf;
 }
 
 .nav {
   display: flex;
   gap: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .link {
   text-decoration: none;
-  color: #fff;
+  color: #dbdbdf;
   font-size: 18px;
+  text-transform: uppercase;
   transition: color 0.3s ease;
 }
 
 .link:hover,
 .link.active {
-  color: #ff6347; /* Tomato color for active and hover state */
+  color: #6aa5e5;
 }
 
-/* Positioning the scroll button */
 .scrollBtn {
   position: fixed;
-  bottom: 20px; /* Distance from the bottom */
-  right: 20px; /* Distance from the right */
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
   border: none;
-  border-radius: 50%; /* Round shape */
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px;
   transition: background-color 0.3s ease;
-  z-index: 1000; /* Ensure the button is above other content */
+  z-index: 1000;
 }
 
 .scrollBtn:hover {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .reactIcon {
-  font-size: 24px;
-  color: #fff;
+  font-size: 30px;
+  color: #dbdbdf;
+}
+
+.reactIcon:hover {
+  color: #6aa5e5;
 }

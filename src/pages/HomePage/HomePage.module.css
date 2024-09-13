@@ -1,8 +1,10 @@
-/* src/pages/HomePage/HomePage.module.css */
 .container {
   padding: 20px;
+  margin: auto;
+  max-width: 1120px;
 }
 
 h1 {
+  text-transform: uppercase;
   margin-bottom: 20px;
 }

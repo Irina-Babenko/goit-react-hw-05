@@ -9,6 +9,8 @@
   border: 1px solid #ddd;
   border-radius: 4px 0 0 4px;
   flex: 1;
+  background-color: #0c0c0c;
+  color: #ddd;
 }
 
 .button {
@@ -16,7 +18,12 @@
   font-size: 16px;
   border: 1px solid #ddd;
   border-radius: 0 4px 4px 0;
-  background-color: #007bff;
+  background-color: #4a82be;
   color: white;
   cursor: pointer;
+}
+
+.button:hover {
+  background-color: #3c6796;
+  transition: color 0.3s ease;
 }

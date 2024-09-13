@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMovieReviews } from '../../fetchTMDB'; // Импорт API для получения отзывов
-import css from './MovieReviews.module.css'; // Импорт стилей
+import { fetchMovieReviews } from '../../fetchTMDB';
+import css from './MovieReviews.module.css';
 
 const MovieReviews = ({ movieId }) => {
   const [reviews, setReviews] = useState([]);

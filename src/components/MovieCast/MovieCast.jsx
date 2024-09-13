@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchMovieCast } from '../../fetchTMDB';
-import css from './MovieCast.module.css'; // Импортируйте стили
+import css from './MovieCast.module.css';
 
 const MovieCast = ({ movieId }) => {
   const [cast, setCast] = useState([]);

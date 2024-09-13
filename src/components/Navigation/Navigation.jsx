@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import { BiArrowToTop } from 'react-icons/bi';
+import { FiArrowUp } from 'react-icons/fi';
 import clsx from 'clsx';
 import css from './Navigation.module.css';
 
@@ -16,6 +16,7 @@ const Navigation = () => {
       navigationRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
   return (
     <header className={css.header}>
       <nav className={css.nav} ref={navigationRef}>
@@ -27,9 +28,10 @@ const Navigation = () => {
         </NavLink>
       </nav>
       <button onClick={scrollToTop} className={css.scrollBtn}>
-        <BiArrowToTop className={css.reactIcon} />
+        <FiArrowUp className={css.reactIcon} />
       </button>
     </header>
   );
 };
+
 export default Navigation;
