@@ -19,7 +19,6 @@ const App = () => {
     <div className={css.appContainer}>
       {' '}
       <div className={css.starfield}>
-        {/* Генерация звезд */}
         {Array.from({ length: 250 }).map((_, index) => (
           <div
             key={index}
