@@ -23,3 +23,23 @@
   text-transform: uppercase;
   margin-bottom: 20px;
 }
+
+@media (max-width: 1024px) {
+  .movieItem {
+    width: 150px;
+  }
+
+  .title {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .movieItem {
+    width: 100px;
+  }
+
+  .title {
+    font-size: 8px;
+  }
+}
