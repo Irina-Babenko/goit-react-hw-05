@@ -17,7 +17,6 @@ const MovieReviews = lazy(() => import('../MovieReviews/MovieReviews'));
 const App = () => {
   return (
     <div className={css.appContainer}>
-      {' '}
       <div className={css.starfield}>
         {Array.from({ length: 250 }).map((_, index) => (
           <div
@@ -39,9 +38,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<MoviesPage />} />
-          <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
-          <Route path="/movies/:movieId/cast" element={<MovieCast />} />
-          <Route path="/movies/:movieId/reviews" element={<MovieReviews />} />
+          <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

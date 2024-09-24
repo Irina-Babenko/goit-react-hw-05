@@ -1,75 +1,118 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { useParams, useLocation, Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
+import {
+  useParams,
+  useLocation,
+  NavLink,
+  Outlet,
+  useNavigate,
+} from 'react-router-dom';
+import Loader from '../../components/Loader/Loader';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import { fetchMovieDetails } from '../../fetchTMDB';
 import css from './MovieDetailsPage.module.css';
 
-const MovieCast = lazy(() => import('../../components/MovieCast/MovieCast'));
-const MovieReviews = lazy(() =>
-  import('../../components/MovieReviews/MovieReviews'),
-);
+const buildLinkClass = ({ isActive }) => {
+  return clsx(css.link, isActive && css.active);
+};
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const backLinkHref = useRef(location.state?.from ?? '/');
 
-  const backLinkHref = location.state?.from ?? '/';
+  const onClickBack = () => navigate(backLinkHref.current);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     const fetchDetails = async () => {
       try {
-        const data = await fetchMovieDetails(movieId);
+        setLoading(true);
+        setError(false);
+        const data = await fetchMovieDetails(movieId, { signal });
         setMovie(data);
       } catch (err) {
-        setError(err);
+        if (err.name !== 'AbortError') {
+          setError(true);
+        }
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchDetails();
+
+    return () => {
+      controller.abort();
+    };
   }, [movieId]);
 
-  if (error) return <div>Error fetching movie details.</div>;
-  if (!movie) return <div>Loading...</div>;
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
+
+  if (!movie) return null;
+
+  const { title, release_date, poster_path, vote_average, overview, genres } =
+    movie;
+  const releaseYear = new Date(release_date).getFullYear() || '-';
+  const titleWithYear = `${title} (${releaseYear})`;
 
   return (
-    <div className={css.container}>
-      <Link to={backLinkHref} className={css.goBackLink}>
+    <main className={css.container}>
+      <button onClick={onClickBack} className={css.btnBack}>
         Go back
-      </Link>
+      </button>
+
       <div className={css.movieDetails}>
-        {movie.poster_path && (
+        {poster_path ? (
           <img
-            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            alt={movie.title}
+            src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
+            alt={title}
             className={css.poster}
           />
+        ) : (
+          <p className={css.notification}>No image available</p>
         )}
         <div className={css.info}>
-          <h1>{movie.title}</h1>
-          <p>
-            <strong>Release Date:</strong> {movie.release_date}
-          </p>
-          <p>
-            <strong>Rating:</strong> {movie.vote_average}
-          </p>
-          <p>
-            <strong>Overview:</strong> {movie.overview}
-          </p>
-          <p>
-            <strong>Genres:</strong>{' '}
-            {movie.genres.map(genre => genre.name).join(', ')}
-          </p>
+          <h1>{titleWithYear}</h1>
+          <p>User Score: {Math.round(vote_average * 10)}%</p>
+          <h2>Overview</h2>
+          <p>{overview}</p>
+          <h2>Genres</h2>
+          {genres.length > 0 ? (
+            <p>{genres.map(genre => genre.name).join(', ')}</p>
+          ) : (
+            <p className={css.notification}>
+              This movie currently has no genre information.
+            </p>
+          )}
         </div>
       </div>
-      <div>
-        <Suspense fallback={<div>Loading cast...</div>}>
-          <MovieCast movieId={movieId} />
-        </Suspense>
-        <Suspense fallback={<div>Loading reviews...</div>}>
-          <MovieReviews movieId={movieId} />
-        </Suspense>
-      </div>
-    </div>
+
+      <p className={css.text}>More about this movie</p>
+
+      <ul className={css.linkList}>
+        <li>
+          <NavLink to="cast" className={css.linkClass}>
+            Cast
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="reviews" className={css.linkClass}>
+            Reviews
+          </NavLink>
+        </li>
+      </ul>
+
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
+    </main>
   );
 };
 

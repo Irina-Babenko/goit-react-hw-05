@@ -1,39 +1,77 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Loader from '../Loader/Loader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { fetchMovieCast } from '../../fetchTMDB';
 import css from './MovieCast.module.css';
 
-const MovieCast = ({ movieId }) => {
+const MovieCast = () => {
+  const { movieId } = useParams();
   const [cast, setCast] = useState([]);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    const fetchCast = async () => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const getCast = async () => {
       try {
-        const data = await fetchMovieCast(movieId);
-        setCast(data);
-      } catch (err) {
-        setError(err);
+        setLoading(true);
+        setError(false);
+        const movieCast = await fetchMovieCast(movieId, { signal });
+        setCast(movieCast);
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          setError(true);
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchCast();
+    getCast();
+
+    return () => {
+      controller.abort();
+    };
   }, [movieId]);
 
-  if (error) {
-    return <p>Error loading cast</p>;
-  }
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
 
   return (
     <div className={css.container}>
       <h2 className={css.title}>Cast</h2>
-      <ul className={css.castList}>
-        {cast.map(actor => (
-          <li key={actor.id} className={css.castItem}>
-            <p className={css.actorName}>{actor.name}</p>
-            <p className={css.character}>Character: {actor.character}</p>
-          </li>
-        ))}
-      </ul>
+      {cast.length > 0 ? (
+        <ul className={css.castList}>
+          {cast.map(({ character, name, profile_path, id }) => (
+            <li key={id} className={css.castItem}>
+              <div className={css.wrapper}>
+                {profile_path ? (
+                  <img
+                    src={`https://image.tmdb.org/t/p/w92/${profile_path}`}
+                    alt={name}
+                    className={css.actorImage}
+                  />
+                ) : (
+                  <p className={css.notification}>No image available</p>
+                )}
+                <div className={css.info}>
+                  <p className={css.actorName}>
+                    <strong>Actor:</strong> {name}
+                  </p>
+                  <p className={css.character}>
+                    <strong>Character:</strong> {character}
+                  </p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className={css.error}>No cast information found for this film.</p>
+      )}
     </div>
   );
 };

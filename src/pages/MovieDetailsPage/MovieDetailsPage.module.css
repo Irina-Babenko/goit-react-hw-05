@@ -4,17 +4,35 @@
   padding: 20px;
 }
 
-.goBackLink {
-  display: inline-block;
+.btnBack {
   margin-bottom: 20px;
-  text-decoration: none;
+  background-color: #0c0c0c;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: white;
   text-transform: lowercase;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btnBack:hover {
   color: #6aa5e5;
+  border: 2px solid rgba(255, 255, 255, 0.158);
+  transition: color 0.3s ease;
 }
 
 .movieDetails {
   display: flex;
   padding-bottom: 40px;
+}
+
+.notification {
+  color: #6a81e5;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-right: 15px;
+  text-align: center;
 }
 
 .poster {
@@ -25,6 +43,31 @@
 
 .info {
   max-width: 600px;
+}
+
+.text {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.linkClass {
+  text-transform: uppercase;
+}
+
+.linkClass:hover {
+  color: #6aa5e5;
+  transition: color 0.3s ease;
 }
 
 h1 {
